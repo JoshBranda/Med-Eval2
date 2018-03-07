@@ -67,9 +67,10 @@ public class PocketSphinxActivity extends Activity implements
     private static final String FORECAST_SEARCH = "forecast";
     private static final String DIGITS_SEARCH = "choking";
     private static final String PHONE_SEARCH = "phones";
-    private static final String MENU_SEARCH = "menu";
+    public static final String MENU_SEARCH = "menu";
     private static final String SNAKE       = "snake";
 
+    //Let PocketSphinx now which menu the user is currently in
     private String state = MENU_SEARCH;
 
     /* Keyword we are looking for to activate menu */
@@ -78,7 +79,7 @@ public class PocketSphinxActivity extends Activity implements
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
 
-    private SpeechRecognizer recognizer;
+    public SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
     @Override
@@ -97,9 +98,6 @@ public class PocketSphinxActivity extends Activity implements
         captions.put(DIGITS_SEARCH, R.string.digits_caption);
         captions.put(PHONE_SEARCH, R.string.phone_caption);
         captions.put(FORECAST_SEARCH, R.string.forecast_caption);
-//        setContentView(R.layout.main);
-//        ((TextView) findViewById(R.id.caption_text))
-//                .setText("Preparing the recognizer");
 
         // Check if user has given permission to record audio
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
@@ -125,10 +123,12 @@ public class PocketSphinxActivity extends Activity implements
 
     public void voiceActivate(String message) {
         if (message.equals("choking")) {
+            recognizer.stop();
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             startActivity(intent);
         }
         else if (message.equals(SNAKE)) {
+            recognizer.stop();
             Intent intent = new Intent(this, snake1.class);
             startActivity(intent);
         }
@@ -153,11 +153,8 @@ public class PocketSphinxActivity extends Activity implements
         @Override
         protected void onPostExecute(Exception result) {
             if (result != null) {
-//                ((TextView) activityReference.get().findViewById(R.id.caption_text))
-//                        .setText("Failed to init recognizer " + result);
             } else {
                 activityReference.get().switchSearch(MENU_SEARCH);
-//                activityReference.get().switchSearch(KWS_SEARCH);
             }
         }
     }
@@ -216,7 +213,6 @@ public class PocketSphinxActivity extends Activity implements
         }
         else
             return;
-//            ((TextView) findViewById(R.id.result_text)).setText(text);
     }
 
     /**
@@ -224,7 +220,6 @@ public class PocketSphinxActivity extends Activity implements
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
-//        ((TextView) findViewById(R.id.result_text)).setText("");
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
             makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
@@ -242,14 +237,11 @@ public class PocketSphinxActivity extends Activity implements
     public void onEndOfSpeech() {
         if (!recognizer.getSearchName().equals(MENU_SEARCH))
             switchSearch(MENU_SEARCH);
-//        if (!recognizer.getSearchName().equals(KWS_SEARCH))
-//            switchSearch(KWS_SEARCH);
     }
 
     private void switchSearch(String searchName) {
         recognizer.stop();
 
-//        recognizer.startListening(searchName);
         recognizer.startListening(MENU_SEARCH);
 
         if (searchName.equals(DIGITS_SEARCH)) {
@@ -300,14 +292,10 @@ public class PocketSphinxActivity extends Activity implements
 
     @Override
     public void onError(Exception error) {
-//        ((TextView) findViewById(R.id.caption_text)).setText(error.getMessage());
     }
 
     @Override
     public void onTimeout() {
         switchSearch(MENU_SEARCH);
     }
-//    public void onTimeout() {
-//        switchSearch(KWS_SEARCH);
-//    }
 }

@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 
 public class heimlich2 extends AppCompatActivity implements MediaPlayer.OnCompletionListener{
 
+    private MediaPlayer heimlich2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heimlich2);
 
-        MediaPlayer heimlich2 = MediaPlayer.create(heimlich2.this,R.raw.heimlich2);
+        heimlich2 = MediaPlayer.create(heimlich2.this,R.raw.heimlich2);
         heimlich2.setOnCompletionListener(this);
         heimlich2.start();
     }
@@ -21,5 +23,13 @@ public class heimlich2 extends AppCompatActivity implements MediaPlayer.OnComple
     public void onCompletion(MediaPlayer mp) {
         Intent intent = new Intent(this, heimlich3.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (heimlich2.isPlaying()) {
+            heimlich2.stop();
+        }
+        super.onDestroy();
     }
 }

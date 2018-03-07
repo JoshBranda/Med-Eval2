@@ -55,6 +55,7 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
+import edu.cmu.sphinx.pocketsphinx.snake1;
 
 import static android.widget.Toast.makeText;
 
@@ -67,6 +68,9 @@ public class PocketSphinxActivity extends Activity implements
     private static final String DIGITS_SEARCH = "choking";
     private static final String PHONE_SEARCH = "phones";
     private static final String MENU_SEARCH = "menu";
+    private static final String SNAKE       = "snake";
+
+    private String state = MENU_SEARCH;
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "oh mighty computer";
@@ -115,7 +119,6 @@ public class PocketSphinxActivity extends Activity implements
 
         if (message.equals("choking")) {
             Intent intent = new Intent(this, DisplayMessageActivity.class);
-//            intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
         }
     }
@@ -123,6 +126,10 @@ public class PocketSphinxActivity extends Activity implements
     public void voiceActivate(String message) {
         if (message.equals("choking")) {
             Intent intent = new Intent(this, DisplayMessageActivity.class);
+            startActivity(intent);
+        }
+        else if (message.equals(SNAKE)) {
+            Intent intent = new Intent(this, snake1.class);
             startActivity(intent);
         }
     }
@@ -192,14 +199,21 @@ public class PocketSphinxActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
+
         if (text.equals(KEYPHRASE))
             switchSearch(MENU_SEARCH);
-        else if (text.equals(DIGITS_SEARCH))
+        else if (text.equals(DIGITS_SEARCH) && state.equals(MENU_SEARCH)) {
             switchSearch(DIGITS_SEARCH);
+            state = DIGITS_SEARCH;
+        }
         else if (text.equals(PHONE_SEARCH))
             switchSearch(PHONE_SEARCH);
         else if (text.equals(FORECAST_SEARCH))
             switchSearch(FORECAST_SEARCH);
+        else if (text.equals(SNAKE)) {
+            switchSearch(SNAKE);
+            state = SNAKE;
+        }
         else
             return;
 //            ((TextView) findViewById(R.id.result_text)).setText(text);
@@ -235,18 +249,16 @@ public class PocketSphinxActivity extends Activity implements
     private void switchSearch(String searchName) {
         recognizer.stop();
 
-        // If we are not spotting, start listening with timeout (10000 ms or 10 seconds).
-//        if (searchName.equals(KWS_SEARCH))
-        if (searchName.equals(MENU_SEARCH))
-            recognizer.startListening(searchName);
-        else
-            recognizer.startListening(searchName, 100000);
+//        recognizer.startListening(searchName);
+        recognizer.startListening(MENU_SEARCH);
 
-        if (searchName.equals(DIGITS_SEARCH))
+        if (searchName.equals(DIGITS_SEARCH)) {
             voiceActivate("choking");
+        }
+        else if (searchName.equals(SNAKE)) {
+            voiceActivate(SNAKE);
+        }
 
-//        String caption = getResources().getString(captions.get(searchName));
-//        ((TextView) findViewById(R.id.caption_text)).setText(caption);
     }
 
     private void setupRecognizer(File assetsDir) throws IOException {

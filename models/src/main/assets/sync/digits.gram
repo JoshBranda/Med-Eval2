@@ -2,16 +2,7 @@
 
 grammar choking;
 
-<digit> = oh    |
-          zero  |
-          one   |
-          two   |
-          three |
-          four  |
-          five  |
-          six   |
-          seven |
-          eight |
-          nine  ;
+<digit> = stop      |
+          continue  ;
 
 public <choking> = <digit>+;

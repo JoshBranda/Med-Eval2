@@ -115,8 +115,13 @@ public class PocketSphinxActivity extends Activity implements
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
 
-        if (message.equals("choking")) {
+        if (message.contains("choking")) {
             Intent intent = new Intent(this, DisplayMessageActivity.class);
+            startActivity(intent);
+        }
+
+        else if (message.contains(SNAKE)) {
+            Intent intent = new Intent(this, snake1.class);
             startActivity(intent);
         }
     }

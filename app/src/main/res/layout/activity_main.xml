@@ -34,22 +34,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/editText" />
 
-    <!--<ImageView-->
-        <!--android:id="@+id/imageView"-->
-        <!--android:layout_width="305dp"-->
-        <!--android:layout_height="250dp"-->
-        <!--android:layout_marginBottom="42dp"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="58dp"-->
-        <!--android:contentDescription="@string/logo"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/button"-->
-        <!--app:layout_constraintVertical_bias="0.894"-->
-        <!--app:srcCompat="@drawable/logo" />-->
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="300dp"
@@ -67,4 +51,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="138dp"
+        android:background="@null"
+        android:onClick="activateRecorder"
+        android:src="@drawable/microphone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

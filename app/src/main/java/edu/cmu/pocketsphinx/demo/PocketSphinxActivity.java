@@ -35,6 +35,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -82,11 +85,14 @@ public class PocketSphinxActivity extends Activity implements
     public SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
+    private boolean isStarted;
+
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
 
         setContentView(R.layout.activity_main);
+        isStarted = false;
 
         MediaPlayer ring= MediaPlayer.create(PocketSphinxActivity.this,R.raw.ring);
         ring.start();
@@ -108,6 +114,7 @@ public class PocketSphinxActivity extends Activity implements
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
         new SetupTask(this).execute();
+//        recognizer.stop();
     }
 
     public void sendMessage(View view) {
@@ -124,6 +131,22 @@ public class PocketSphinxActivity extends Activity implements
             Intent intent = new Intent(this, snake1.class);
             startActivity(intent);
         }
+    }
+
+    public void activateRecorder(View view) {
+
+        if (isStarted) {
+            MediaPlayer mp = MediaPlayer.create(this, R.raw.finished);
+            mp.start();
+            isStarted = false;
+        }
+        else {
+            MediaPlayer mp = MediaPlayer.create(this, R.raw.unsure);
+            mp.start();
+            isStarted = true;
+        }
+
+        switchSearch(MENU_SEARCH);
     }
 
     public void voiceActivate(String message) {
@@ -226,8 +249,8 @@ public class PocketSphinxActivity extends Activity implements
     @Override
     public void onResult(Hypothesis hypothesis) {
         if (hypothesis != null) {
-            String text = hypothesis.getHypstr();
-            makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+//            String text = hypothesis.getHypstr();
+//            makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -247,13 +270,15 @@ public class PocketSphinxActivity extends Activity implements
     private void switchSearch(String searchName) {
         recognizer.stop();
 
-        recognizer.startListening(MENU_SEARCH);
+        if (isStarted) {
 
-        if (searchName.equals(DIGITS_SEARCH)) {
-            voiceActivate("choking");
-        }
-        else if (searchName.equals(SNAKE)) {
-            voiceActivate(SNAKE);
+            recognizer.startListening(MENU_SEARCH);
+
+            if (searchName.equals(DIGITS_SEARCH)) {
+                voiceActivate("choking");
+            } else if (searchName.equals(SNAKE)) {
+                voiceActivate(SNAKE);
+            }
         }
 
     }
@@ -276,23 +301,23 @@ public class PocketSphinxActivity extends Activity implements
          */
 
         // Create keyword-activation search.
-        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
+//        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
 
         // Create grammar-based search for selection between demos
         File menuGrammar = new File(assetsDir, "menu.gram");
         recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
 
         // Create grammar-based search for digit recognition
-        File digitsGrammar = new File(assetsDir, "digits.gram");
-        recognizer.addGrammarSearch(DIGITS_SEARCH, digitsGrammar);
+//        File digitsGrammar = new File(assetsDir, "digits.gram");
+//        recognizer.addGrammarSearch(DIGITS_SEARCH, digitsGrammar);
 
         // Create language model search
-        File languageModel = new File(assetsDir, "weather.dmp");
-        recognizer.addNgramSearch(FORECAST_SEARCH, languageModel);
+//        File languageModel = new File(assetsDir, "weather.dmp");
+//        recognizer.addNgramSearch(FORECAST_SEARCH, languageModel);
 
         // Phonetic search
-        File phoneticModel = new File(assetsDir, "en-phone.dmp");
-        recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
+//        File phoneticModel = new File(assetsDir, "en-phone.dmp");
+//        recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
     }
 
     @Override

@@ -65,6 +65,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PocketSphinxActivity" />
         </activity>
+        <activity android:name="edu.cmu.sphinx.pocketsphinx.SnakeVoice" />
+        <activity android:name="edu.cmu.sphinx.pocketsphinx.SnakeAmbulance1" />
+        <activity android:name=".SnakeMenu" />
+        <activity android:name=".BreathingMenu"></activity>
     </application>
 
 </manifest>

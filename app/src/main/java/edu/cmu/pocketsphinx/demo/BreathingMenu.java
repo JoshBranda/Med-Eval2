@@ -54,11 +54,10 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 import edu.cmu.sphinx.pocketsphinx.SnakeVoice;
-import edu.cmu.sphinx.pocketsphinx.snake1;
 
 import static android.widget.Toast.makeText;
 
-public class PocketSphinxActivity extends Activity implements
+public class BreathingMenu extends Activity implements
         RecognitionListener {
 
     /* Named searches allow to quickly reconfigure the decoder */
@@ -84,11 +83,8 @@ public class PocketSphinxActivity extends Activity implements
     public void onCreate(Bundle state) {
         super.onCreate(state);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_injury_menu);
         isStarted = false;
-
-        MediaPlayer ring= MediaPlayer.create(PocketSphinxActivity.this,R.raw.ring);
-        ring.start();
 
         // Prepare the data for UI
         captions = new HashMap<>();
@@ -106,13 +102,8 @@ public class PocketSphinxActivity extends Activity implements
 //        recognizer.stop();
     }
 
-    public void startPoison(View view) {
-        Intent intent = new Intent(this, SnakeMenu.class);
-        startActivity(intent);
-    }
-
-    public void startBreathing(View view) {
-        Intent intent = new Intent(this, BreathingMenu.class);
+    public void startChoking(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
         startActivity(intent);
     }
 
@@ -162,8 +153,8 @@ public class PocketSphinxActivity extends Activity implements
     }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<PocketSphinxActivity> activityReference;
-        SetupTask(PocketSphinxActivity activity) {
+        WeakReference<BreathingMenu> activityReference;
+        SetupTask(BreathingMenu activity) {
             this.activityReference = new WeakReference<>(activity);
         }
         @Override

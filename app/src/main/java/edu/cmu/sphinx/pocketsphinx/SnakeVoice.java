@@ -1,35 +1,8 @@
-/* ====================================================================
- * Copyright (c) 2014 Alpha Cephei Inc.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY ALPHA CEPHEI INC. ``AS IS'' AND
- * ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY
- * NOR ITS EMPLOYEES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ====================================================================
+package edu.cmu.sphinx.pocketsphinx;
+
+/**
+ * Created by joshuasander on 3/9/18.
  */
-
-package edu.cmu.pocketsphinx.demo;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -53,18 +26,18 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
-import edu.cmu.sphinx.pocketsphinx.SnakeVoice;
-import edu.cmu.sphinx.pocketsphinx.snake1;
+import edu.cmu.pocketsphinx.demo.DisplayMessageActivity;
+import edu.cmu.pocketsphinx.demo.R;
 
 import static android.widget.Toast.makeText;
 
-public class PocketSphinxActivity extends Activity implements
-        RecognitionListener {
+public class SnakeVoice extends Activity implements
+        RecognitionListener, MediaPlayer.OnCompletionListener {
 
     /* Named searches allow to quickly reconfigure the decoder */
-    private static final String DIGITS_SEARCH = "choking";
+    private static final String YES = "yes";
     public static final String MENU_SEARCH = "menu";
-    private static final String SNAKE       = "snake";
+    private static final String NO       = "no";
 
     //Let PocketSphinx now which menu the user is currently in
     private String state = MENU_SEARCH;
@@ -84,10 +57,11 @@ public class PocketSphinxActivity extends Activity implements
     public void onCreate(Bundle state) {
         super.onCreate(state);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_snake_voice);
         isStarted = false;
 
-        MediaPlayer ring= MediaPlayer.create(PocketSphinxActivity.this,R.raw.ring);
+        MediaPlayer ring= MediaPlayer.create(edu.cmu.sphinx.pocketsphinx.SnakeVoice.this,R.raw.ambulance);
+        ring.setOnCompletionListener(this);
         ring.start();
 
         // Prepare the data for UI
@@ -102,68 +76,51 @@ public class PocketSphinxActivity extends Activity implements
         }
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
-        new SetupTask(this).execute();
+        new edu.cmu.sphinx.pocketsphinx.SnakeVoice.SetupTask(this).execute();
 //        recognizer.stop();
     }
 
-    public void startPoison(View view) {
-        Intent intent = new Intent(this, SnakeMenu.class);
-        startActivity(intent);
-    }
-
-    public void startBreathing(View view) {
-        Intent intent = new Intent(this, BreathingMenu.class);
-        startActivity(intent);
-    }
-
-    public void sendMessage(View view) {
-        // Do something in response to button
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
-
-        if (message.contains("choking")) {
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            startActivity(intent);
-        }
-
-        else if (message.contains(SNAKE)) {
-            Intent intent = new Intent(this, SnakeVoice.class);
-            startActivity(intent);
-        }
-    }
-
-    public void activateRecorder(View view) {
-
-        if (isStarted) {
-            MediaPlayer mp = MediaPlayer.create(this, R.raw.finished);
-            mp.start();
-            isStarted = false;
-        }
-        else {
-            MediaPlayer mp = MediaPlayer.create(this, R.raw.unsure);
-            mp.start();
-            isStarted = true;
-        }
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        MediaPlayer mp2 = MediaPlayer.create(this, R.raw.unsure);
+        mp2.start();
+        isStarted = true;
 
         switchSearch(MENU_SEARCH);
     }
 
+//    public void activateRecorder(View view) {
+//
+//        if (isStarted) {
+//            MediaPlayer mp = MediaPlayer.create(this, R.raw.finished);
+//            mp.start();
+//            isStarted = false;
+//        }
+//        else {
+//            MediaPlayer mp = MediaPlayer.create(this, R.raw.unsure);
+//            mp.start();
+//            isStarted = true;
+//        }
+//
+//        switchSearch(MENU_SEARCH);
+//    }
+
     public void voiceActivate(String message) {
-        if (message.equals("choking")) {
+        if (message.equals(YES)) {
             recognizer.stop();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            Intent intent = new Intent(this, SnakeAmbulance1.class);
             startActivity(intent);
         }
-        else if (message.equals(SNAKE)) {
+        else if (message.equals(NO)) {
             recognizer.stop();
-            Intent intent = new Intent(this, SnakeVoice.class);
+            Intent intent = new Intent(this, snake1.class);
             startActivity(intent);
         }
     }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<PocketSphinxActivity> activityReference;
-        SetupTask(PocketSphinxActivity activity) {
+        WeakReference<edu.cmu.sphinx.pocketsphinx.SnakeVoice> activityReference;
+        SetupTask(edu.cmu.sphinx.pocketsphinx.SnakeVoice activity) {
             this.activityReference = new WeakReference<>(activity);
         }
         @Override
@@ -195,7 +152,7 @@ public class PocketSphinxActivity extends Activity implements
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Recognizer initialization is a time-consuming and it involves IO,
                 // so we execute it in async task
-                new SetupTask(this).execute();
+                new edu.cmu.sphinx.pocketsphinx.SnakeVoice.SetupTask(this).execute();
             } else {
                 finish();
             }
@@ -226,13 +183,13 @@ public class PocketSphinxActivity extends Activity implements
 
         if (text.equals(KEYPHRASE))
             switchSearch(MENU_SEARCH);
-        else if (text.equals(DIGITS_SEARCH) && state.equals(MENU_SEARCH)) {
-            switchSearch(DIGITS_SEARCH);
-            state = DIGITS_SEARCH;
+        else if (text.equals(YES) && state.equals(MENU_SEARCH)) {
+            switchSearch(YES);
+            state = YES;
         }
-        else if (text.equals(SNAKE)) {
-            switchSearch(SNAKE);
-            state = SNAKE;
+        else if (text.equals(NO)) {
+            switchSearch(NO);
+            state = NO;
         }
         else
             return;
@@ -269,10 +226,10 @@ public class PocketSphinxActivity extends Activity implements
 
             recognizer.startListening(MENU_SEARCH);
 
-            if (searchName.equals(DIGITS_SEARCH)) {
-                voiceActivate("choking");
-            } else if (searchName.equals(SNAKE)) {
-                voiceActivate(SNAKE);
+            if (searchName.equals(YES)) {
+                voiceActivate(YES);
+            } else if (searchName.equals(NO)) {
+                voiceActivate(NO);
             }
         }
 
@@ -299,7 +256,7 @@ public class PocketSphinxActivity extends Activity implements
 //        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
 
         // Create grammar-based search for selection between demos
-        File menuGrammar = new File(assetsDir, "menu.gram");
+        File menuGrammar = new File(assetsDir, "digits.gram");
         recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
 
     }
@@ -313,3 +270,4 @@ public class PocketSphinxActivity extends Activity implements
         switchSearch(MENU_SEARCH);
     }
 }
+

@@ -58,7 +58,7 @@ import edu.cmu.sphinx.pocketsphinx.snake1;
 
 import static android.widget.Toast.makeText;
 
-public class PocketSphinxActivity extends Activity implements
+public class SnakeMenu extends Activity implements
         RecognitionListener {
 
     /* Named searches allow to quickly reconfigure the decoder */
@@ -84,11 +84,8 @@ public class PocketSphinxActivity extends Activity implements
     public void onCreate(Bundle state) {
         super.onCreate(state);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_snake_menu);
         isStarted = false;
-
-        MediaPlayer ring= MediaPlayer.create(PocketSphinxActivity.this,R.raw.ring);
-        ring.start();
 
         // Prepare the data for UI
         captions = new HashMap<>();
@@ -106,13 +103,8 @@ public class PocketSphinxActivity extends Activity implements
 //        recognizer.stop();
     }
 
-    public void startPoison(View view) {
-        Intent intent = new Intent(this, SnakeMenu.class);
-        startActivity(intent);
-    }
-
-    public void startBreathing(View view) {
-        Intent intent = new Intent(this, BreathingMenu.class);
+    public void startSnake(View view) {
+        Intent intent = new Intent(this, SnakeVoice.class);
         startActivity(intent);
     }
 
@@ -162,8 +154,8 @@ public class PocketSphinxActivity extends Activity implements
     }
 
     private static class SetupTask extends AsyncTask<Void, Void, Exception> {
-        WeakReference<PocketSphinxActivity> activityReference;
-        SetupTask(PocketSphinxActivity activity) {
+        WeakReference<SnakeMenu> activityReference;
+        SetupTask(SnakeMenu activity) {
             this.activityReference = new WeakReference<>(activity);
         }
         @Override
@@ -313,3 +305,4 @@ public class PocketSphinxActivity extends Activity implements
         switchSearch(MENU_SEARCH);
     }
 }
+

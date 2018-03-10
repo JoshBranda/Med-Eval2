@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.cmu.pocketsphinx.demo.PocketSphinxActivity">
+    tools:context="edu.cmu.pocketsphinx.demo.SnakeMenu">
 
     <EditText
         android:id="@+id/editText"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/snakeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -77,14 +77,14 @@
         android:background="@null"
         android:maxHeight="80dp"
         android:maxWidth="80dp"
-        android:onClick="startPoison"
+        android:onClick="startSnake"
         android:scaleType="fitCenter"
-        android:src="@drawable/poison2"
+        android:src="@drawable/snakeicon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/spiderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
@@ -94,25 +94,9 @@
         android:maxHeight="65dp"
         android:maxWidth="65dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/injury"
+        android:src="@drawable/spider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:maxHeight="80dp"
-        android:maxWidth="80dp"
-        android:onClick="startBreathing"
-        android:scaleType="fitCenter"
-        android:src="@drawable/breathing"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poisonText" />
 
     <TextView
         android:id="@+id/poisonText"
@@ -120,41 +104,27 @@
         android:layout_height="35dp"
         android:layout_marginStart="46dp"
         android:layout_marginTop="8dp"
-        android:text="Poison"
+        android:text="Snake"
         android:textAlignment="center"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="16sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/snakeButton" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/spiderText"
         android:layout_width="69dp"
         android:layout_height="35dp"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="8dp"
-        android:text="Injury"
+        android:text="Spider"
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="16sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+        app:layout_constraintTop_toBottomOf="@+id/spiderButton" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="120dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="8dp"
-        android:text="Respiratory\nDistress"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
-        />
 
 </android.support.constraint.ConstraintLayout>

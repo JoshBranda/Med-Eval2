@@ -1,8 +1,6 @@
 #JSGF V1.0;
 
-grammar choking;
+grammar snakeMenu;
 
-<digit> = stop      |
-          continue  ;
+public <item> = yes | no;
 
-public <choking> = <digit>+;

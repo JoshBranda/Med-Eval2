@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 public class DisplayMessageActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener{
 
     private MediaPlayer heimlich1;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +34,34 @@ public class DisplayMessageActivity extends AppCompatActivity implements MediaPl
             heimlich1.stop();
         }
         super.onDestroy();
+    }
+
+    public void back(View view) {
+        if (heimlich1.isPlaying()) {
+            heimlich1.stop();
+        }
+
+        Intent intent = new Intent(this, PocketSphinxActivity.class);
+        startActivity(intent);
+    }
+
+    public void pause(View view) {
+        if (heimlich1.isPlaying()) {
+            heimlich1.pause();
+            position = heimlich1.getCurrentPosition();
+        }
+        else {
+            heimlich1.seekTo(position);
+            heimlich1.start();
+        }
+    }
+
+    public void next(View view) {
+        if (heimlich1.isPlaying()) {
+            heimlich1.stop();
+        }
+
+        Intent intent = new Intent(this, heimlich2.class);
+        startActivity(intent);
     }
 }

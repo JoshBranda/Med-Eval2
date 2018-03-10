@@ -17,4 +17,8 @@
     <string name="heimlich3">heimlich3</string>
     <string name="heimlich4">heimlich4</string>
     <string name="snake1">snake1</string>
+    <string name="pause">pause</string>
+    <string name="MainMenu">Main Menu</string>
+    <string name="Previous">Previous</string>
+    <string name="Pause">Pause</string>
 </resources>

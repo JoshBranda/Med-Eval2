@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class heimlich4 extends AppCompatActivity {
+public class heimlich4 extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
     MediaPlayer heimlich4;
     private int position;
@@ -18,7 +18,14 @@ public class heimlich4 extends AppCompatActivity {
 
         position = 1;
         heimlich4 = MediaPlayer.create(heimlich4.this,R.raw.heimlich4);
+        heimlich4.setOnCompletionListener(this);
         heimlich4.start();
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        Intent intent = new Intent(this, PocketSphinxActivity.class);
+        startActivity(intent);
     }
 
     @Override

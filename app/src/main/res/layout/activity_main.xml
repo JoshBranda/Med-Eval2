@@ -38,17 +38,16 @@
         android:id="@+id/textView"
         android:layout_width="300dp"
         android:layout_height="85dp"
-        android:layout_marginBottom="54dp"
         android:layout_marginEnd="58dp"
         android:layout_marginStart="53dp"
-        android:layout_marginTop="87dp"
+        android:layout_marginTop="24dp"
         android:text="Med-Eval"
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="36sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -67,4 +66,95 @@
         android:src="@drawable/microphone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:onClick="activateRecorder"
+        android:scaleType="fitCenter"
+        android:src="@drawable/poison2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:maxHeight="65dp"
+        android:maxWidth="65dp"
+        android:onClick="activateRecorder"
+        android:scaleType="fitCenter"
+        android:src="@drawable/injury"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:onClick="activateRecorder"
+        android:scaleType="fitCenter"
+        android:src="@drawable/breathing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poisonText" />
+
+    <TextView
+        android:id="@+id/poisonText"
+        android:layout_width="69dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="8dp"
+        android:text="Poison"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="69dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
+        android:text="Injury"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="120dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:text="Respiratory\nDistress"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
+
 </android.support.constraint.ConstraintLayout>

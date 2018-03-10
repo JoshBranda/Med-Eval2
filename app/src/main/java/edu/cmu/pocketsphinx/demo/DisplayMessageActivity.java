@@ -16,6 +16,7 @@ public class DisplayMessageActivity extends AppCompatActivity implements MediaPl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
 
+        position = 1;
         heimlich1 = MediaPlayer.create(DisplayMessageActivity.this,R.raw.heimlich1);
         heimlich1.setOnCompletionListener(this);
         heimlich1.start();

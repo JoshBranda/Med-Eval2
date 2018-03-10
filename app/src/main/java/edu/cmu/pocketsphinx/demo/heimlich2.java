@@ -16,6 +16,7 @@ public class heimlich2 extends AppCompatActivity implements MediaPlayer.OnComple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heimlich2);
 
+        position = 1;
         heimlich2 = MediaPlayer.create(heimlich2.this,R.raw.heimlich2);
         heimlich2.setOnCompletionListener(this);
         heimlich2.start();

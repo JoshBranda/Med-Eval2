@@ -23,6 +23,7 @@
 
     <Button
         android:id="@+id/button10"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
@@ -31,10 +32,11 @@
         android:text="@string/Previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Back" />
+        tools:text="Back"/>
 
     <Button
         android:id="@+id/button11"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
@@ -49,6 +51,7 @@
 
     <Button
         android:id="@+id/button12"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"

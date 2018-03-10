@@ -24,6 +24,7 @@
 
     <Button
         android:id="@+id/button10"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
@@ -36,6 +37,7 @@
 
     <Button
         android:id="@+id/button11"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
@@ -50,6 +52,7 @@
 
     <Button
         android:id="@+id/button12"
+        android:background="@drawable/border_radius"
         android:layout_width="100dp"
         android:layout_height="82dp"
         android:layout_marginBottom="8dp"
